@@ -39,7 +39,7 @@ A detailed written report covering:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/vivekmba24/Colorado-MV-Finanical-Analysis.git
+   git clone https://github.com/vivek-yadav-02/Colorado-MV-Financial-Analysis.git
    ```
 
 2. **View the report** — Open the `.pdf` file in any PDF viewer for the full written analysis.
