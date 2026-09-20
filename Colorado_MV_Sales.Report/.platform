@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Colorado_MV_Sales"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "aae77bf2-b377-4e40-93f6-4eceb7bb6920"
+  }
+}

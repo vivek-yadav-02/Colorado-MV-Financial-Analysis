@@ -1,0 +1,253 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "about_about_left",
+  "position": {
+    "x": 172,
+    "y": 72,
+    "z": 800,
+    "width": 520,
+    "height": 612,
+    "tabOrder": 800
+  },
+  "visual": {
+    "visualType": "textbox",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "What this dashboard shows",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "12pt",
+                      "color": "#FFFFFF",
+                      "fontFamily": "Segoe UI Semibold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Quarterly motor vehicle sales for 17 Colorado counties (plus a Rest of State bucket) across eight fiscal years, FY2008–FY2015. It is an executive-style view: headline KPIs, the growth path, county and regional concentration, and seasonality.",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#C3C2B7",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#C3C2B7",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Data source",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#FFFFFF",
+                      "fontFamily": "Segoe UI Semibold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Colorado Department of Revenue, Motor Vehicle Sales by County (published on data.colorado.gov). 501 county-quarter records, four fields: year, quarter, county, sales in US dollars.",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#C3C2B7",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#C3C2B7",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Pages",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#FFFFFF",
+                      "fontFamily": "Segoe UI Semibold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Dashboard – one-screen summary.  Sales Trend – quarterly series, prior-year comparison, quarter-over-quarter growth, rolling 4-quarter total.  Counties – ranking, county × year matrix, CAGR and share.  Regions – five county groups.  Quarters – seasonality and same-quarter growth.  Data – every record, filterable.",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#C3C2B7",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#C3C2B7",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Region definitions",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#FFFFFF",
+                      "fontFamily": "Segoe UI Semibold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Denver Metro: Adams, Arapahoe, Denver, Douglas, Jefferson, Boulder, Broomfield.  N. Front Range: Larimer, Weld.  S. Front Range: El Paso, Pueblo, Fremont.  Western Slope: Mesa, Garfield, La Plata.  Rest of State: all other counties, as reported by the source.",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#C3C2B7",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#C3C2B7",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Author",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#FFFFFF",
+                      "fontFamily": "Segoe UI Semibold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Vivek Yadav · MBA Finance · Financial Analyst portfolio project. Companion Excel analysis: github.com/vivek-yadav-02/Colorado-MV-Financial-Analysis",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#C3C2B7",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

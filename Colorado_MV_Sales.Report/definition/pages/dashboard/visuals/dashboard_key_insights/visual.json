@@ -1,0 +1,129 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "dashboard_key_insights",
+  "position": {
+    "x": 832,
+    "y": 562,
+    "z": 2900,
+    "width": 428,
+    "height": 124,
+    "tabOrder": 2900
+  },
+  "visual": {
+    "visualType": "textbox",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Key Insights",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "12pt",
+                      "color": "#FFFFFF",
+                      "fontFamily": "Segoe UI Semibold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "●  Sales rose from $8.97B (FY2008) to $14.51B (FY2015): +61.8%, a 7.1% CAGR despite the -14.6% dip in FY2009.",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#C3C2B7",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "●  FY2011 jumped +42.2%, FY2012 corrected -9.9%, then three straight growth years (+9.5%, +11.6%, +8.3%).",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#C3C2B7",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "●  Arapahoe alone is 22.8% of sales and Denver Metro ≈ 62%; Q3 is the strongest quarter (27%), Q1 the weakest (23%).",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#C3C2B7",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

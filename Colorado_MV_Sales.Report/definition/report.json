@@ -1,0 +1,80 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/1.0.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY24SU06",
+      "type": "SharedResources",
+      "reportVersionAtImport": "5.55"
+    },
+    "customTheme": {
+      "name": "ColoradoDark.json",
+      "type": "RegisteredResources",
+      "reportVersionAtImport": "5.55"
+    }
+  },
+  "layoutOptimization": "None",
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY24SU06",
+          "path": "BaseThemes/CY24SU06.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "ColoradoDark.json",
+          "path": "ColoradoDark.json",
+          "type": "CustomTheme"
+        },
+        {
+          "name": "bg_dashboard.png",
+          "path": "bg_dashboard.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg_trend.png",
+          "path": "bg_trend.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg_counties.png",
+          "path": "bg_counties.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg_regions.png",
+          "path": "bg_regions.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg_quarters.png",
+          "path": "bg_quarters.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg_data.png",
+          "path": "bg_data.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg_about.png",
+          "path": "bg_about.png",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "defaultDrillFilterOtherVisuals": true,
+    "useEnhancedTooltips": true
+  }
+}
