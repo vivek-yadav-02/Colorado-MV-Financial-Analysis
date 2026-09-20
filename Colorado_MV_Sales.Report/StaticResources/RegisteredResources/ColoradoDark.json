@@ -161,6 +161,97 @@
               }
             }
           }
+        ],
+        "outspacePane": [
+          {
+            "backgroundColor": {
+              "solid": {
+                "color": "#121C30"
+              }
+            },
+            "foregroundColor": {
+              "solid": {
+                "color": "#C3C2B7"
+              }
+            },
+            "transparency": 0,
+            "border": true,
+            "borderColor": {
+              "solid": {
+                "color": "#1F2B45"
+              }
+            },
+            "titleSize": 12,
+            "headerSize": 10,
+            "fontFamily": "Segoe UI",
+            "checkboxAndApplyColor": {
+              "solid": {
+                "color": "#E85555"
+              }
+            },
+            "inputBoxColor": {
+              "solid": {
+                "color": "#172440"
+              }
+            },
+            "width": 220
+          }
+        ],
+        "filterCard": [
+          {
+            "$id": "Available",
+            "backgroundColor": {
+              "solid": {
+                "color": "#172440"
+              }
+            },
+            "foregroundColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0,
+            "border": true,
+            "borderColor": {
+              "solid": {
+                "color": "#1F2B45"
+              }
+            },
+            "textSize": 9,
+            "fontFamily": "Segoe UI",
+            "inputBoxColor": {
+              "solid": {
+                "color": "#121C30"
+              }
+            }
+          },
+          {
+            "$id": "Applied",
+            "backgroundColor": {
+              "solid": {
+                "color": "#3A1E28"
+              }
+            },
+            "foregroundColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0,
+            "border": true,
+            "borderColor": {
+              "solid": {
+                "color": "#E85555"
+              }
+            },
+            "textSize": 9,
+            "fontFamily": "Segoe UI",
+            "inputBoxColor": {
+              "solid": {
+                "color": "#121C30"
+              }
+            }
+          }
         ]
       }
     },
