@@ -1,0 +1,4 @@
+expression DataFolder = "C:\Users\Asus\Documents\Colorado_PowerBI_Dashboard\data" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 95913664-069b-587c-ba54-00b301d5afb2
+
+	annotation PBI_ResultType = Text

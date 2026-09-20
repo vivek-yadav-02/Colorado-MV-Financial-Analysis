@@ -1,0 +1,95 @@
+table Calendar
+	lineageTag: 506d0b3a-42df-5245-b286-6a61f97340b4
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: yyyy-mm-dd
+		lineageTag: 2a866fd3-ffe2-55e7-bc39-57603d478524
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = User
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 268bfc71-ecb8-5b1e-a3e0-f6c017976f4d
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = User
+
+	column 'Quarter No'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4227daf2-901f-5182-b8af-e13bbab8e5ba
+		summarizeBy: none
+		sourceColumn: Quarter No
+
+		annotation SummarizationSetBy = User
+
+	column Quarter
+		dataType: string
+		lineageTag: 83282c64-155d-5ba9-b6f1-6a23dd529ba3
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = User
+
+	column 'Year Quarter'
+		dataType: string
+		lineageTag: 6aac1b86-2b46-50c8-9b9f-ae3542aeffe4
+		summarizeBy: none
+		sourceColumn: Year Quarter
+		sortByColumn: 'Year Quarter Sort'
+
+		annotation SummarizationSetBy = User
+
+	column 'Year Quarter Sort'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a2cc26a3-3373-5621-8f22-24dd45ef7c74
+		summarizeBy: none
+		sourceColumn: Year Quarter Sort
+
+		annotation SummarizationSetBy = User
+
+	column 'Fiscal Year'
+		dataType: string
+		lineageTag: 50e8556a-a90d-578b-8fb9-756d9203bac6
+		summarizeBy: none
+		sourceColumn: Fiscal Year
+
+		annotation SummarizationSetBy = User
+
+	column 'Quarter Start'
+		dataType: dateTime
+		formatString: mmm yyyy
+		lineageTag: bc945120-3d07-585d-bf5e-938c6c9bd03f
+		summarizeBy: none
+		sourceColumn: Quarter Start
+
+		annotation SummarizationSetBy = User
+
+	partition Calendar = m
+		mode: import
+		source =
+				let
+				    Dates = List.Dates(#date(2008, 1, 1), Duration.Days(#date(2015, 12, 31) - #date(2008, 1, 1)) + 1, #duration(1, 0, 0, 0)),
+				    T = Table.FromList(Dates, Splitter.SplitByNothing(), {"Date"}),
+				    T1 = Table.TransformColumnTypes(T, {{"Date", type date}}),
+				    T2 = Table.AddColumn(T1, "Year", each Date.Year([Date]), Int64.Type),
+				    T3 = Table.AddColumn(T2, "Quarter No", each Date.QuarterOfYear([Date]), Int64.Type),
+				    T4 = Table.AddColumn(T3, "Quarter", each "Q" & Text.From(Date.QuarterOfYear([Date])), type text),
+				    T5 = Table.AddColumn(T4, "Year Quarter", each Text.From(Date.Year([Date])) & " Q" & Text.From(Date.QuarterOfYear([Date])), type text),
+				    T6 = Table.AddColumn(T5, "Year Quarter Sort", each Date.Year([Date]) * 10 + Date.QuarterOfYear([Date]), Int64.Type),
+				    T7 = Table.AddColumn(T6, "Fiscal Year", each "FY" & Text.From(Date.Year([Date])), type text),
+				    T8 = Table.AddColumn(T7, "Quarter Start", each Date.StartOfQuarter([Date]), type date)
+				in
+				    T8
+
+	annotation PBI_ResultType = Table

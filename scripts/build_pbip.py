@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Generate the Colorado Motor Vehicle Sales Power BI project (PBIP / PBIR + TMSL) — 7 pages with sidebar navigation."""
+"""Generate the Colorado Motor Vehicle Sales Power BI project (PBIP / PBIR + TMDL) — 7 pages with sidebar navigation."""
 import json, os, shutil
 from PIL import Image, ImageDraw, ImageFont
 
@@ -200,8 +200,91 @@ model = {
         "annotations": [{"name": "PBI_QueryOrder", "value": '["DataFolder","Sales","Calendar"]'}],
     },
 }
-dump(os.path.join(SM, "model.bim"), model)
-dump(os.path.join(SM, "definition.pbism"), {"version": "4.0", "settings": {}})
+# ---- emit the model as TMDL (one file per table) instead of a single model.bim ----
+import uuid
+NS = uuid.UUID("6f1d3c2e-7b44-4a6e-9c1a-colorado0001".replace("colorado0001", "0000c0104ad0"))
+
+
+def tag(*parts):
+    """stable lineageTag so regenerating the project does not churn git diffs"""
+    return str(uuid.uuid5(NS, "|".join(parts)))
+
+
+def q(name):
+    """TMDL identifier quoting: quote anything that is not a plain word"""
+    import re
+    return name if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", name) else "'" + name.replace("'", "''") + "'"
+
+
+def tmdl_table(t):
+    L = [f"table {q(t['name'])}", f"	lineageTag: {tag('table', t['name'])}"]
+    if t.get("dataCategory"):
+        L.append(f"	dataCategory: {t['dataCategory']}")
+    L.append("")
+    for m in t.get("measures", []):
+        L += [f"	measure {q(m['name'])} = ```", f"			{m['expression']}", "			```"]
+        if m.get("formatString"):
+            L.append(f"		formatString: {m['formatString']}")
+        L += [f"		lineageTag: {tag('measure', t['name'], m['name'])}", ""]
+    for c in t["columns"]:
+        L.append(f"	column {q(c['name'])}")
+        L.append(f"		dataType: {c['dataType']}")
+        if c.get("isKey"):
+            L.append("		isKey")
+        if c.get("isHidden"):
+            L.append("		isHidden")
+        if c.get("formatString"):
+            L.append(f"		formatString: {c['formatString']}")
+        L.append(f"		lineageTag: {tag('column', t['name'], c['name'])}")
+        L.append(f"		summarizeBy: {c.get('summarizeBy', 'none')}")
+        L.append(f"		sourceColumn: {c['sourceColumn']}")
+        if c.get("sortByColumn"):
+            L.append(f"		sortByColumn: {q(c['sortByColumn'])}")
+        L += ["", "		annotation SummarizationSetBy = User", ""]
+    for part in t["partitions"]:
+        L += [f"	partition {q(part['name'])} = m", f"		mode: {part['mode']}", "		source ="]
+        L += ["				" + line for line in part["source"]["expression"]]
+        L.append("")
+    L += ["	annotation PBI_ResultType = Table", ""]
+    return "\n".join(L)
+
+
+def emit_tmdl(model):
+    for stale in ["model.bim"]:
+        sp = os.path.join(SM, stale)
+        if os.path.exists(sp):
+            os.remove(sp)
+    ddir = os.path.join(SM, "definition")
+    shutil.rmtree(ddir, ignore_errors=True)
+    os.makedirs(os.path.join(ddir, "tables"), exist_ok=True)
+    m = model["model"]
+    w = lambda name, text: open(os.path.join(ddir, name), "w", encoding="utf-8", newline="\n").write(text)
+    w("database.tmdl", f"database\n\tcompatibilityLevel: {model['compatibilityLevel']}\n")
+    lines = ["model Model", f"	culture: {m['culture']}", f"	defaultPowerBIDataSourceVersion: {m['defaultPowerBIDataSourceVersion']}",
+             f"	sourceQueryCulture: {m['sourceQueryCulture']}", "	dataAccessOptions", "		legacyRedirects", "		returnErrorValuesAsNull", ""]
+    for a in m.get("annotations", []):
+        lines += [f"annotation {a['name']} = {a['value']}", ""]
+    lines += ["annotation __PBI_TimeIntelligenceEnabled = 0", ""]
+    lines += [f"ref table {q(t['name'])}" for t in m["tables"]] + [""]
+    w("model.tmdl", "\n".join(lines))
+    ex = []
+    for e in m.get("expressions", []):
+        ex += [f"expression {q(e['name'])} = " + " ".join(e["expression"]), f"	lineageTag: {tag('expression', e['name'])}", ""]
+        for a in e.get("annotations", []):
+            ex += [f"	annotation {a['name']} = {a['value']}", ""]
+    w("expressions.tmdl", "\n".join(ex))
+    rel = []
+    for r in m["relationships"]:
+        rel += [f"relationship {r['name']}", f"	fromColumn: {q(r['fromTable'])}.{q(r['fromColumn'])}", f"	toColumn: {q(r['toTable'])}.{q(r['toColumn'])}", ""]
+    w("relationships.tmdl", "\n".join(rel))
+    for t in m["tables"]:
+        w(os.path.join("tables", f"{t['name']}.tmdl"), tmdl_table(t))
+
+
+emit_tmdl(model)
+dump(os.path.join(SM, "definition.pbism"), {
+    "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/semanticModel/definitionProperties/1.0.0/schema.json",
+    "version": "4.2", "settings": {}})
 
 # =====================================================================================
 # 2. PROJECT + REPORT SHELL + THEME
@@ -678,7 +761,7 @@ pg.textbox("about_right", RX + 10, TOP + 6, RW - 20, BOTTOM - TOP - 12, [
     ("●  The sidebar items Vehicles/Reports/Settings from the original design were replaced with real pages; there is no vehicle-type data in this source.", "p"),
     (" ", "p"),
     ("Build", "b"),
-    ("Power BI project (PBIP, PBIR report format) generated from a Python script: TMSL model with 38 DAX measures, one JSON file per visual, a custom dark theme and painted page backgrounds. Colour palette validated for colour-vision deficiency and contrast.", "p"),
+    ("Power BI project (PBIP, PBIR report format) generated from a Python script: TMDL model with 38 DAX measures, one JSON file per visual, a custom dark theme and painted page backgrounds. Colour palette validated for colour-vision deficiency and contrast.", "p"),
 ])
 
 # =====================================================================================

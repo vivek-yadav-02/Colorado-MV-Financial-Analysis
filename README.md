@@ -11,7 +11,7 @@ counties, FY 2008–FY 2015, plus the written financial analysis report. Built a
 | Path | Description |
 |---|---|
 | `Colorado_MV_Sales.pbip` | Power BI project entry point — open this in Power BI Desktop |
-| `Colorado_MV_Sales.SemanticModel/` | Data model (TMSL): Sales + Calendar tables, 38 DAX measures, `DataFolder` parameter |
+| `Colorado_MV_Sales.SemanticModel/` | Data model in TMDL (`definition/*.tmdl`): Sales + Calendar tables, 38 DAX measures, `DataFolder` parameter |
 | `Colorado_MV_Sales.Report/` | Report definition (PBIR): 7 pages, 109 visuals, dark theme, painted page backgrounds |
 | `data/colorado_motor_vehicle_sales.csv` | Source data — 501 county-quarter records (year, quarter, county, sales) |
 | `screenshots/` | One PNG per report page |
@@ -90,7 +90,7 @@ sub-labels (CAGR, YoY vs prior year, peak quarter, top-county share) recalculate
 
 ## Tools
 
-- **Power BI Desktop** — PBIP / PBIR project format, DAX, Power Query (M)
+- **Power BI Desktop** — PBIP project, PBIR report format, TMDL semantic model, DAX, Power Query (M)
 - **Python** (Pillow) — project generator and page-background renderer
 - Source: Colorado Department of Revenue, Motor Vehicle Sales by County (data.colorado.gov)
 

@@ -1,0 +1,320 @@
+table Sales
+	lineageTag: 6996563c-6030-5ae6-82db-0a4498128510
+
+	measure 'Total Sales' = ```
+			SUM ( Sales[Sales] )
+			```
+		formatString: $#,0
+		lineageTag: 21b21bca-a2fc-5096-9011-bb862c00c7ff
+
+	measure 'Total Sales (B)' = ```
+			DIVIDE ( [Total Sales], 1000000000 )
+			```
+		formatString: $#,0.00"B"
+		lineageTag: 41c473b5-a0c3-5221-8a30-05709a08f4ca
+
+	measure 'Sales $B' = ```
+			DIVIDE ( [Total Sales], 1000000000 )
+			```
+		formatString: $#,0.0"B"
+		lineageTag: 24c2f413-efac-533d-a136-b30bd074c021
+
+	measure 'Sales $M' = ```
+			DIVIDE ( [Total Sales], 1000000 )
+			```
+		formatString: $#,0.0"M"
+		lineageTag: f5ba4e44-05a9-5681-a7d6-0c49f89d18e0
+
+	measure 'Sales PY' = ```
+			CALCULATE ( [Total Sales], SAMEPERIODLASTYEAR ( 'Calendar'[Date] ) )
+			```
+		formatString: $#,0
+		lineageTag: d07e1875-a391-55d7-a84b-f52440f72707
+
+	measure 'Sales PY $B' = ```
+			DIVIDE ( [Sales PY], 1000000000 )
+			```
+		formatString: $#,0.0"B"
+		lineageTag: 73ad974b-a2ca-58a2-be28-5c2bb383c899
+
+	measure 'YoY %' = ```
+			DIVIDE ( [Total Sales] - [Sales PY], [Sales PY] )
+			```
+		formatString: 0.0%
+		lineageTag: 344b941d-cb41-5170-b10c-38177ad1228e
+
+	measure 'Sales PQ' = ```
+			CALCULATE ( [Total Sales], DATEADD ( 'Calendar'[Date], -1, QUARTER ) )
+			```
+		formatString: $#,0
+		lineageTag: 2431f5ad-e507-534f-a987-104c13871f98
+
+	measure 'QoQ %' = ```
+			DIVIDE ( [Total Sales] - [Sales PQ], [Sales PQ] )
+			```
+		formatString: 0.0%
+		lineageTag: 7df56c8c-7753-5d60-b8f0-a6f3c62a7501
+
+	measure 'Rolling 4Q Sales $B' = ```
+			VAR w = DATESINPERIOD ( 'Calendar'[Date], MAX ( 'Calendar'[Date] ), -1, YEAR ) VAR q = CALCULATE ( DISTINCTCOUNT ( Sales[Period Sort] ), w ) RETURN IF ( q = 4, CALCULATE ( [Sales $B], w ) )
+			```
+		formatString: $#,0.0"B"
+		lineageTag: c2d96c10-01ec-562e-a3c1-db480f93bfca
+
+	measure Quarters = ```
+			DISTINCTCOUNT ( Sales[Period Sort] )
+			```
+		formatString: #,0
+		lineageTag: fe4f582d-8c27-5827-bb90-454aa8702d4c
+
+	measure Rows = ```
+			COUNTROWS ( Sales )
+			```
+		formatString: #,0
+		lineageTag: 6312ad43-8141-5fcf-8c3f-12cd14956c1b
+
+	measure 'Avg Quarterly Sales' = ```
+			DIVIDE ( [Total Sales], [Quarters] * 1000000000 )
+			```
+		formatString: $#,0.00"B"
+		lineageTag: 68f4b31b-7ec2-5747-9dec-185b8c0102e4
+
+	measure 'Latest Year' = ```
+			MAX ( Sales[Year] )
+			```
+		formatString: 0
+		lineageTag: 79b800eb-3c3e-5269-9746-1bc6fcf198ca
+
+	measure 'First Year' = ```
+			MIN ( Sales[Year] )
+			```
+		formatString: 0
+		lineageTag: 81c6e913-678a-526f-b6e8-16c6829d77b0
+
+	measure 'Latest Year Sales' = ```
+			VAR y = [Latest Year] RETURN DIVIDE ( CALCULATE ( [Total Sales], Sales[Year] = y ), 1000000000 )
+			```
+		formatString: $#,0.00"B"
+		lineageTag: 1b545fe9-2b33-5a80-8d01-0d8dddad57a3
+
+	measure 'Prior Year Sales' = ```
+			VAR y = [Latest Year] - 1 RETURN DIVIDE ( CALCULATE ( [Total Sales], Sales[Year] = y ), 1000000000 )
+			```
+		formatString: $#,0.00"B"
+		lineageTag: 665113ea-9635-536a-a7b0-fdfeb381a975
+
+	measure 'Latest YoY %' = ```
+			DIVIDE ( [Latest Year Sales] - [Prior Year Sales], [Prior Year Sales] )
+			```
+		formatString: 0.0%
+		lineageTag: 230c2adf-e522-5141-a636-2284cd992852
+
+	measure CAGR = ```
+			VAR y1 = [First Year] VAR y2 = [Latest Year] VAR s1 = CALCULATE ( [Total Sales], Sales[Year] = y1 ) VAR s2 = CALCULATE ( [Total Sales], Sales[Year] = y2 ) RETURN IF ( y2 > y1 && s1 > 0, DIVIDE ( s2, s1 ) ^ ( 1 / ( y2 - y1 ) ) - 1 )
+			```
+		formatString: 0.0%
+		lineageTag: 3bc7570d-3b09-5b58-884c-eea5c945cb88
+
+	measure 'Best Quarter Sales' = ```
+			DIVIDE ( MAXX ( VALUES ( Sales[Period] ), [Total Sales] ), 1000000000 )
+			```
+		formatString: $#,0.00"B"
+		lineageTag: f95a2a04-2b3d-541e-84d9-283c62189a47
+
+	measure 'Best Quarter' = ```
+			MAXX ( TOPN ( 1, VALUES ( Sales[Period] ), [Total Sales] ), Sales[Period] )
+			```
+		lineageTag: 3cbc1b6d-cae4-57fa-8b76-7dc58309f6d3
+
+	measure Counties = ```
+			DISTINCTCOUNT ( Sales[County] )
+			```
+		formatString: #,0
+		lineageTag: 4a1cb0bf-a6d1-5892-b2a3-5d5edd3f74b6
+
+	measure Years = ```
+			DISTINCTCOUNT ( Sales[Year] )
+			```
+		formatString: #,0
+		lineageTag: a93b7212-6a0a-5498-9fe0-817aa830c02e
+
+	measure 'Top County' = ```
+			MAXX ( TOPN ( 1, VALUES ( Sales[County] ), [Total Sales] ), Sales[County] )
+			```
+		lineageTag: e83bdb33-21c7-5250-9da2-687123a2d0f9
+
+	measure 'Top County Share' = ```
+			DIVIDE ( MAXX ( VALUES ( Sales[County] ), [Total Sales] ), [Total Sales] )
+			```
+		formatString: 0.0%
+		lineageTag: b7b97330-bfc0-5f16-88e2-c0ad788a9794
+
+	measure 'Share of State %' = ```
+			DIVIDE ( [Total Sales], CALCULATE ( [Total Sales], REMOVEFILTERS ( Sales[County], Sales[Region] ) ) )
+			```
+		formatString: 0.0%
+		lineageTag: 4deaac16-2f0d-59d4-8049-f0bac1f818e4
+
+	measure 'Share of Year %' = ```
+			DIVIDE ( [Total Sales], CALCULATE ( [Total Sales], REMOVEFILTERS ( 'Calendar'[Quarter], 'Calendar'[Quarter No], Sales[Quarter], Sales[Quarter No] ) ) )
+			```
+		formatString: 0.0%
+		lineageTag: 36f90214-5157-5a08-8cf1-1b80ea9b7a5b
+
+	measure 'KPI Total Sales Sub' = ```
+			IF ( ISBLANK ( [CAGR] ), "single year selected", ( IF ( [CAGR] >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( [CAGR] ), "0.0%" ) & " CAGR FY" & RIGHT ( [First Year], 2 ) & "–" & RIGHT ( [Latest Year], 2 ) ) )
+			```
+		lineageTag: e911acbf-a654-53f9-9d95-49dabf90cd73
+
+	measure 'KPI Latest Year Sub' = ```
+			IF ( ISBLANK ( [Latest YoY %] ), "no prior year in selection", ( IF ( [Latest YoY %] >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( [Latest YoY %] ), "0.0%" ) & " vs FY" & ( [Latest Year] - 1 ) ) )
+			```
+		lineageTag: 2140b5d6-d9ab-5a7c-bcd7-ae56151084d0
+
+	measure 'KPI Avg Quarter Sub' = ```
+			"across " & [Quarters] & " quarters"
+			```
+		lineageTag: ad597a4a-1585-5a97-bfcf-57f4ab594888
+
+	measure 'KPI Best Quarter Sub' = ```
+			"peak quarter: " & [Best Quarter]
+			```
+		lineageTag: c9714008-765d-5dbd-90e6-7df6db06bc51
+
+	measure 'KPI Top County Sub' = ```
+			FORMAT ( [Top County Share], "0.0%" ) & " share of sales"
+			```
+		lineageTag: 7bd06dba-adca-597b-adde-3caea5ad01a1
+
+	measure 'KPI Counties Sub' = ```
+			[Years] & " years · " & [Quarters] & " quarters"
+			```
+		lineageTag: c07c6743-31cd-5cbf-95d9-486da46f0506
+
+	measure 'Delta Color CAGR' = ```
+			IF ( [CAGR] >= 0, "#0CA30C", "#D03B3B" )
+			```
+		lineageTag: 8feb4736-4b6d-5025-b19f-3fd53d09a9c9
+
+	measure 'Delta Color YoY' = ```
+			IF ( [Latest YoY %] >= 0, "#0CA30C", "#D03B3B" )
+			```
+		lineageTag: ef092387-34b9-5879-871a-0c612e02447d
+
+	measure 'YoY Bar Color' = ```
+			IF ( [YoY %] >= 0, "#0CA30C", "#D03B3B" )
+			```
+		lineageTag: e458543f-f07b-5c75-9166-9a8537d35673
+
+	measure 'QoQ Bar Color' = ```
+			IF ( [QoQ %] >= 0, "#0CA30C", "#D03B3B" )
+			```
+		lineageTag: 0bae6fd8-3ffd-57ff-8ec4-61e4960fceb1
+
+	measure 'CAGR Bar Color' = ```
+			IF ( [CAGR] >= 0, "#0CA30C", "#D03B3B" )
+			```
+		lineageTag: 43a7bd36-b99d-5770-aed0-90b046da3b07
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: c017ae01-5c0c-5598-bd57-536e4bb3b0be
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = User
+
+	column 'Quarter No'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0130da67-7e8b-5bca-b1c7-fb67dbf17e3a
+		summarizeBy: none
+		sourceColumn: Quarter No
+
+		annotation SummarizationSetBy = User
+
+	column County
+		dataType: string
+		lineageTag: cb8a2408-676e-558d-a0d3-d8c6844529a8
+		summarizeBy: none
+		sourceColumn: County
+
+		annotation SummarizationSetBy = User
+
+	column Sales
+		dataType: int64
+		formatString: $#,0
+		lineageTag: 9127eff2-81e9-5c94-9f58-8aa84676e825
+		summarizeBy: sum
+		sourceColumn: Sales
+
+		annotation SummarizationSetBy = User
+
+	column Date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: de9829d8-00f3-5ec5-ad94-594c8464c1ce
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = User
+
+	column Quarter
+		dataType: string
+		lineageTag: 6081e2ce-6868-5d87-b83f-62995aec62d9
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = User
+
+	column Period
+		dataType: string
+		lineageTag: 298d222d-2905-55c7-a59c-812440a2ec25
+		summarizeBy: none
+		sourceColumn: Period
+		sortByColumn: 'Period Sort'
+
+		annotation SummarizationSetBy = User
+
+	column 'Period Sort'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 29890d70-6a13-5a3a-9ba4-6ed3d0d08823
+		summarizeBy: none
+		sourceColumn: Period Sort
+
+		annotation SummarizationSetBy = User
+
+	column Region
+		dataType: string
+		lineageTag: 30a39967-510e-5dbb-a77f-e45045ba1850
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = User
+
+	partition Sales = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\colorado_motor_vehicle_sales.csv"), [Delimiter = ",", Columns = 4, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"year", Int64.Type}, {"quarter", Int64.Type}, {"county", type text}, {"sales", Int64.Type}}),
+				    Renamed = Table.RenameColumns(Typed, {{"year", "Year"}, {"quarter", "Quarter No"}, {"county", "County"}, {"sales", "Sales"}}),
+				    AddDate = Table.AddColumn(Renamed, "Date", each #date([Year], ([Quarter No] - 1) * 3 + 1, 1), type date),
+				    AddQ = Table.AddColumn(AddDate, "Quarter", each "Q" & Text.From([Quarter No]), type text),
+				    AddPeriod = Table.AddColumn(AddQ, "Period", each Text.From([Year]) & " Q" & Text.From([Quarter No]), type text),
+				    AddPeriodSort = Table.AddColumn(AddPeriod, "Period Sort", each [Year] * 10 + [Quarter No], Int64.Type),
+				    AddRegion = Table.AddColumn(AddPeriodSort, "Region", each
+				        if List.Contains({"Adams", "Arapahoe", "Denver", "Douglas", "Jefferson", "Boulder", "Broomfield", "Boulder/Broomfield"}, [County]) then "Denver Metro"
+				        else if List.Contains({"Larimer", "Weld"}, [County]) then "N. Front Range"
+				        else if List.Contains({"El Paso", "Pueblo", "Fremont"}, [County]) then "S. Front Range"
+				        else if List.Contains({"Mesa", "Garfield", "La Plata"}, [County]) then "Western Slope"
+				        else "Rest of State", type text)
+				in
+				    AddRegion
+
+	annotation PBI_ResultType = Table
