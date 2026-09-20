@@ -78,7 +78,7 @@ for attempt in range(4):
     n = data_loaded(im)
     full_ribbon = sum(im.getpixel((300, 190))) > 3 * 200     # light at y=190 => full ribbon; dark => compact ribbon
     print("red px:", n, "full ribbon:", full_ribbon, flush=True)
-    if n > 200:
+    if n > 5000:
         break
     if full_ribbon:
         click(hwnd, 766, 140)      # Home > Refresh (full ribbon)

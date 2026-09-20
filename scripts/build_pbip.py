@@ -327,7 +327,23 @@ theme = {
             "categoryLabels": [{"color": {"solid": {"color": INK2}}}],
             "outspace": [{"color": {"solid": {"color": PAGE_BG}}}],
         }},
-        "page": {"*": {"background": [{"color": {"solid": {"color": PAGE_BG}}, "transparency": 0}], "outspace": [{"color": {"solid": {"color": PAGE_BG}}}]}},
+        "page": {"*": {
+            "background": [{"color": {"solid": {"color": PAGE_BG}}, "transparency": 0}],
+            "outspace": [{"color": {"solid": {"color": PAGE_BG}}}],
+            # Filters pane + filter cards live under page.* in the theme schema; dark so text is not white-on-white
+            "outspacePane": [{"backgroundColor": {"solid": {"color": PANEL}}, "foregroundColor": {"solid": {"color": INK2}},
+                              "transparency": 0, "border": True, "borderColor": {"solid": {"color": PANEL_BORDER}},
+                              "titleSize": 12, "headerSize": 10, "fontFamily": "Segoe UI", "checkboxAndApplyColor": {"solid": {"color": ACCENT}},
+                              "inputBoxColor": {"solid": {"color": PANEL_ALT}}, "width": 220}],
+            "filterCard": [
+                {"$id": "Available", "backgroundColor": {"solid": {"color": PANEL_ALT}}, "foregroundColor": {"solid": {"color": INK}},
+                 "transparency": 0, "border": True, "borderColor": {"solid": {"color": PANEL_BORDER}}, "textSize": 9, "fontFamily": "Segoe UI",
+                 "inputBoxColor": {"solid": {"color": PANEL}}},
+                {"$id": "Applied", "backgroundColor": {"solid": {"color": "#3A1E28"}}, "foregroundColor": {"solid": {"color": INK}},
+                 "transparency": 0, "border": True, "borderColor": {"solid": {"color": ACCENT}}, "textSize": 9, "fontFamily": "Segoe UI",
+                 "inputBoxColor": {"solid": {"color": PANEL}}},
+            ]
+        }},
         "slicer": {"*": {
             "general": [{"outlineColor": {"solid": {"color": PANEL_BORDER}}, "outlineWeight": 1}],
             "items": [{"fontColor": {"solid": {"color": INK}}, "background": {"solid": {"color": PANEL}}, "fontSize": 9}],
